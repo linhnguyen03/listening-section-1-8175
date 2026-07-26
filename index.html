@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vocabulary: Calling About a Job (Band 5.5)</title>
+<style>
+  :root{
+    --primary:#5b6fd8;
+    --primary-dark:#4457c0;
+    --accent:#ff8a65;
+    --bg:#f4f6fb;
+    --card:#ffffff;
+    --text:#2b2d42;
+    --muted:#6b7280;
+    --good:#2e7d32;
+    --bad:#c62828;
+    --border:#e2e5ef;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--bg);
+    margin:0;
+    padding:0;
+    color:var(--text);
+  }
+  header{
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    color:#fff;
+    padding:28px 20px 20px;
+    text-align:center;
+  }
+  header h1{margin:0 0 6px;font-size:1.5rem;}
+  header p{margin:0;opacity:0.9;font-size:0.95rem;}
+  .container{max-width:780px;margin:0 auto;padding:20px;}
+  .tabs{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:20px auto 0;
+    max-width:780px;
+    padding:0 20px;
+  }
+  .tab-btn{
+    flex:1;
+    padding:12px 8px;
+    border:none;
+    border-radius:10px 10px 0 0;
+    background:#e5e8f5;
+    color:var(--primary-dark);
+    font-weight:600;
+    cursor:pointer;
+    font-size:0.95rem;
+    transition:0.2s;
+  }
+  .tab-btn.active{
+    background:var(--card);
+    color:var(--primary);
+    box-shadow:0 -2px 8px rgba(0,0,0,0.05);
+  }
+  .panel{display:none;background:var(--card);border-radius:0 0 14px 14px;padding:22px;box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+  .panel.active{display:block;}
+
+  /* Glossary */
+  .word-card{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .word-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .word-title h3{margin:0;color:var(--primary-dark);font-size:1.15rem;}
+  .ipa{color:var(--muted);font-size:0.95rem;}
+  .pos{
+    font-size:0.75rem;
+    background:#eef0fa;
+    color:var(--primary-dark);
+    padding:2px 8px;
+    border-radius:20px;
+    font-style:italic;
+  }
+  .def{margin:8px 0 4px;}
+  .example{color:var(--muted);font-style:italic;font-size:0.92rem;}
+  .vi{color:#a9afc3;font-size:0.88rem;margin:2px 0 0;}
+
+  /* Flashcards */
+  .flash-wrap{display:flex;flex-direction:column;align-items:center;}
+  .flashcard{
+    width:100%;
+    max-width:420px;
+    height:230px;
+    perspective:1000px;
+    margin:10px auto 18px;
+  }
+  .flash-inner{
+    position:relative;
+    width:100%;height:100%;
+    text-align:center;
+    transition:transform 0.5s;
+    transform-style:preserve-3d;
+    cursor:pointer;
+  }
+  .flash-inner.flipped{transform:rotateY(180deg);}
+  .flash-face{
+    position:absolute;width:100%;height:100%;
+    backface-visibility:hidden;
+    border-radius:16px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:16px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.1);
+  }
+  .flash-front{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;}
+  .flash-back{background:#fff8f2;border:2px solid var(--accent);transform:rotateY(180deg);}
+  .flash-front h2{font-size:1.6rem;margin:0 0 6px;}
+  .flash-back p{margin:6px 0;}
+  .flash-nav{display:flex;gap:14px;align-items:center;margin-top:6px;}
+  .nav-btn{
+    background:var(--primary);color:#fff;border:none;border-radius:8px;
+    padding:8px 16px;cursor:pointer;font-size:0.9rem;
+  }
+  .nav-btn:hover{background:var(--primary-dark);}
+  .flash-counter{color:var(--muted);font-size:0.9rem;}
+
+  /* Quiz */
+  .quiz-progress{color:var(--muted);font-size:0.9rem;margin-bottom:10px;}
+  .quiz-q{font-size:1.05rem;font-weight:600;margin-bottom:14px;}
+  .quiz-options{display:flex;flex-direction:column;gap:10px;}
+  .option-btn{
+    text-align:left;
+    padding:12px 14px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:#fafbff;
+    cursor:pointer;
+    font-size:0.95rem;
+  }
+  .option-btn:hover{border-color:var(--primary);}
+  .option-btn.correct{background:#e8f5e9;border-color:var(--good);color:var(--good);font-weight:600;}
+  .option-btn.incorrect{background:#fdecea;border-color:var(--bad);color:var(--bad);font-weight:600;}
+  .option-btn[disabled]{cursor:default;}
+  .quiz-feedback{margin-top:14px;font-size:0.9rem;min-height:20px;}
+  .quiz-actions{margin-top:16px;display:flex;justify-content:space-between;align-items:center;}
+  .score-box{
+    text-align:center;padding:30px 10px;
+  }
+  .score-box h2{color:var(--primary-dark);}
+  .restart-btn{
+    background:var(--accent);color:#fff;border:none;padding:10px 20px;
+    border-radius:8px;cursor:pointer;font-size:0.95rem;margin-top:10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📞 Calling About a Job</h1>
+  <p>Vocabulary Practice — Band 5.5</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('glossary')">Glossary</button>
+  <button class="tab-btn" onclick="showTab('flashcards')">Flashcards</button>
+  <button class="tab-btn" onclick="showTab('quiz')">Quiz</button>
+</div>
+
+<div class="container">
+
+  <!-- GLOSSARY -->
+  <div id="glossary" class="panel active"></div>
+
+  <!-- FLASHCARDS -->
+  <div id="flashcards" class="panel">
+    <div class="flash-wrap">
+      <div class="flashcard">
+        <div class="flash-inner" id="flashInner" onclick="flipCard()">
+          <div class="flash-face flash-front" id="flashFront"></div>
+          <div class="flash-face flash-back" id="flashBack"></div>
+        </div>
+      </div>
+      <div class="flash-nav">
+        <button class="nav-btn" onclick="prevCard()">◀ Prev</button>
+        <span class="flash-counter" id="flashCounter"></span>
+        <button class="nav-btn" onclick="nextCard()">Next ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="panel">
+    <div id="quizArea"></div>
+  </div>
+
+</div>
+
+<script>
+const vocab = [
+  {
+    word: "temporary",
+    ipa: "/ˈtemprəri/",
+    pos: "adjective",
+    def: "lasting or intended to last for only a short time; not permanent.",
+    example: "I'm looking for some temporary work while I finish my studies.",
+    vi: "tạm thời"
+  },
+  {
+    word: "permanent",
+    ipa: "/ˈpɜːmənənt/",
+    pos: "adjective",
+    def: "lasting or intended to last for a long time or forever; not temporary.",
+    example: "There is no guarantee of permanent employment after training.",
+    vi: "lâu dài, cố định"
+  },
+  {
+    word: "application",
+    ipa: "/ˌæplɪˈkeɪʃn/",
+    pos: "noun",
+    def: "a formal, often written, request for something such as a job or a place at college.",
+    example: "We received over a hundred applications for the job.",
+    vi: "đơn xin (việc)"
+  },
+  {
+    word: "recruitment",
+    ipa: "/rɪˈkruːtmənt/",
+    pos: "noun",
+    def: "the process of finding and choosing new people to join a company or organization.",
+    example: "The company launched a recruitment drive to fill several new posts.",
+    vi: "sự tuyển dụng"
+  },
+  {
+    word: "available",
+    ipa: "/əˈveɪləbl/",
+    pos: "adjective",
+    def: "able to be used or obtained, or free to do something.",
+    example: "She's in a meeting now, but she'll be available this afternoon.",
+    vi: "có sẵn, sẵn sàng"
+  },
+  {
+    word: "qualification",
+    ipa: "/ˌkwɒlɪfɪˈkeɪʃn/",
+    pos: "noun",
+    def: "a skill, exam result, or type of experience that is needed for a particular job.",
+    example: "Previous experience is a necessary qualification for this job.",
+    vi: "bằng cấp, trình độ chuyên môn"
+  },
+  {
+    word: "certificate",
+    ipa: "/səˈtɪfɪkət/",
+    pos: "noun",
+    def: "an official document proving that you have completed a course of study or passed an exam.",
+    example: "A certificate of completion will be given to everyone who finishes the course.",
+    vi: "chứng chỉ"
+  },
+  {
+    word: "reference",
+    ipa: "/ˈrefrəns/",
+    pos: "noun",
+    def: "a person who agrees to describe your character or ability, especially when applying for a job.",
+    example: "My previous manager agreed to act as a reference for me.",
+    vi: "người/thư giới thiệu"
+  },
+  {
+    word: "employer",
+    ipa: "/ɪmˈplɔɪə(r)/",
+    pos: "noun",
+    def: "a person or company that pays people to work for them.",
+    example: "This factory is one of the largest employers in the area.",
+    vi: "người/công ty sử dụng lao động"
+  },
+  {
+    word: "employee",
+    ipa: "/ɪmˈplɔɪiː/",
+    pos: "noun",
+    def: "a person who is paid to work for a person or company.",
+    example: "All new employees must complete a short induction course.",
+    vi: "nhân viên"
+  },
+  {
+    word: "arrangement",
+    ipa: "/əˈreɪndʒmənt/",
+    pos: "noun",
+    def: "a plan for how something will be done, often agreed between people in advance.",
+    example: "The college made special arrangements for students with medical needs.",
+    vi: "sự sắp xếp, thỏa thuận"
+  },
+  {
+    word: "aware",
+    ipa: "/əˈweə(r)/",
+    pos: "adjective",
+    def: "knowing that something exists or is happening.",
+    example: "Everybody should be made aware of the risks involved.",
+    vi: "nhận thức được, biết rõ"
+  },
+  {
+    word: "relevant",
+    ipa: "/ˈreləvənt/",
+    pos: "adjective",
+    def: "closely connected to what is being discussed or done.",
+    example: "They are looking for someone with relevant experience in childcare.",
+    vi: "liên quan, phù hợp"
+  },
+  {
+    word: "hygiene",
+    ipa: "/ˈhaɪdʒiːn/",
+    pos: "noun",
+    def: "the practice of keeping yourself and your surroundings clean to prevent illness.",
+    example: "Many skin diseases can be prevented by good personal hygiene.",
+    vi: "vệ sinh"
+  },
+  {
+    word: "preference",
+    ipa: "/ˈprefrəns/",
+    pos: "noun",
+    def: "a greater interest in or liking for one thing over another.",
+    example: "Preference will be given to candidates with relevant experience.",
+    vi: "sự ưu tiên"
+  },
+  {
+    word: "appointment",
+    ipa: "/əˈpɔɪntmənt/",
+    pos: "noun",
+    def: "an arrangement to meet someone, or a job or position of responsibility.",
+    example: "I can't start work until after my hospital appointment next week.",
+    vi: "cuộc hẹn"
+  },
+  {
+    word: "landline",
+    ipa: "/ˈlændlaɪn/",
+    pos: "noun",
+    def: "a telephone connection that uses wires, as opposed to a mobile phone.",
+    example: "Could you give me a landline number in case your mobile is switched off?",
+    vi: "điện thoại cố định (điện thoại bàn)"
+  }
+];
+
+/* ---------- GLOSSARY ---------- */
+function buildGlossary(){
+  const container = document.getElementById('glossary');
+  container.innerHTML = vocab.map(v => `
+    <div class="word-card">
+      <div class="word-title">
+        <h3>${v.word}</h3>
+        <span class="ipa">${v.ipa}</span>
+        <span class="pos">${v.pos}</span>
+      </div>
+      <p class="def">${v.def}</p>
+      <p class="vi">${v.vi}</p>
+      <p class="example">"${v.example}"</p>
+    </div>
+  `).join('');
+}
+
+/* ---------- TABS ---------- */
+function showTab(id){
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if(id === 'flashcards') renderFlashcard();
+  if(id === 'quiz') initQuiz();
+}
+
+/* ---------- FLASHCARDS ---------- */
+let flashIndex = 0;
+let flipped = false;
+
+function renderFlashcard(){
+  const v = vocab[flashIndex];
+  document.getElementById('flashFront').innerHTML = `<h2>${v.word}</h2><div>${v.ipa}</div><div class="pos" style="margin-top:8px;background:rgba(255,255,255,0.25);color:#fff;">${v.pos}</div>`;
+  document.getElementById('flashBack').innerHTML = `<p><strong>${v.def}</strong></p><p class="example">"${v.example}"</p>`;
+  document.getElementById('flashCounter').textContent = `${flashIndex + 1} / ${vocab.length}`;
+  document.getElementById('flashInner').classList.remove('flipped');
+  flipped = false;
+}
+function flipCard(){
+  flipped = !flipped;
+  document.getElementById('flashInner').classList.toggle('flipped', flipped);
+}
+function nextCard(){
+  flashIndex = (flashIndex + 1) % vocab.length;
+  renderFlashcard();
+}
+function prevCard(){
+  flashIndex = (flashIndex - 1 + vocab.length) % vocab.length;
+  renderFlashcard();
+}
+
+/* ---------- QUIZ ---------- */
+// Fill-in-the-blank sentences, each with exactly one correct match among the
+// four shuffled options.
+const quizData = [
+  { sentence: "I'm only looking for ______ work, since I'm still a student.", answer: "temporary" },
+  { sentence: "There's no guarantee of ______ employment once the training period ends.", answer: "permanent" },
+  { sentence: "The company received more than a hundred ______s for the same position.", answer: "application" },
+  { sentence: "The shop is running a ______ drive to fill three new posts before Christmas.", answer: "recruitment" },
+  { sentence: "She's busy right now, but she'll be ______ to talk after lunch.", answer: "available" },
+  { sentence: "Previous experience with children is a useful ______ for this role.", answer: "qualification" },
+  { sentence: "She has a food-handling ______ from her time at catering college.", answer: "certificate" },
+  { sentence: "Could you give me the name of someone who could act as a ______ for you?", answer: "reference" },
+  { sentence: "The supermarket is one of the biggest ______s in this town.", answer: "employer" },
+  { sentence: "All new ______s at the company must attend a short first-aid course.", answer: "employee" },
+  { sentence: "The college made special ______s for students with medical appointments.", answer: "arrangement" },
+  { sentence: "It's good that you've made us ______ of your condition in advance.", answer: "aware" },
+  { sentence: "The interviewer only wanted to hear about her ______ experience in catering.", answer: "relevant" },
+  { sentence: "Restaurants must follow strict food ______ rules to protect customers.", answer: "hygiene" },
+  { sentence: "Candidates with previous kitchen experience will be given ______.", answer: "preference" },
+  { sentence: "She can't start the job until after her hospital ______ next week.", answer: "appointment" },
+  { sentence: "The receptionist asked for a ______ number in case the mobile was unreachable.", answer: "landline" }
+];
+
+let quizOrder = [];
+let quizIndex = 0;
+let quizScore = 0;
+
+function shuffle(arr){
+  const a = [...arr];
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initQuiz(){
+  quizOrder = shuffle(quizData);
+  quizIndex = 0;
+  quizScore = 0;
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion(){
+  const area = document.getElementById('quizArea');
+  if(quizIndex >= quizOrder.length){
+    area.innerHTML = `
+      <div class="score-box">
+        <h2>Quiz Complete! 🎉</h2>
+        <p>Your score: <strong>${quizScore} / ${quizOrder.length}</strong></p>
+        <button class="restart-btn" onclick="initQuiz()">Try Again</button>
+      </div>`;
+    return;
+  }
+
+  const q = quizOrder[quizIndex];
+  const distractors = shuffle(vocab.filter(v => v.word !== q.answer)).slice(0, 3).map(v => v.word);
+  const options = shuffle([q.answer, ...distractors]);
+
+  area.innerHTML = `
+    <div class="quiz-progress">Question ${quizIndex + 1} of ${quizOrder.length} &nbsp;|&nbsp; Score: ${quizScore}</div>
+    <div class="quiz-q">${q.sentence}</div>
+    <div class="quiz-options" id="quizOptions">
+      ${options.map(opt => `<button class="option-btn" data-word="${opt}" onclick="checkAnswer(this, '${q.answer}')">${opt}</button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <div class="quiz-actions">
+      <button class="nav-btn" id="nextQBtn" style="display:none;" onclick="nextQuestion()">Next Question ▶</button>
+    </div>
+  `;
+}
+
+function checkAnswer(btn, correctAnswer){
+  const buttons = document.querySelectorAll('#quizOptions .option-btn');
+  buttons.forEach(b => b.disabled = true);
+  const chosen = btn.getAttribute('data-word');
+  const feedback = document.getElementById('quizFeedback');
+
+  if(chosen === correctAnswer){
+    btn.classList.add('correct');
+    feedback.textContent = "✅ Correct!";
+    feedback.style.color = "#2e7d32";
+    quizScore++;
+  } else {
+    btn.classList.add('incorrect');
+    feedback.textContent = `❌ Not quite. The correct answer is "${correctAnswer}".`;
+    feedback.style.color = "#c62828";
+    buttons.forEach(b => {
+      if(b.getAttribute('data-word') === correctAnswer) b.classList.add('correct');
+    });
+  }
+  document.getElementById('nextQBtn').style.display = 'inline-block';
+}
+
+function nextQuestion(){
+  quizIndex++;
+  renderQuizQuestion();
+}
+
+/* ---------- INIT ---------- */
+buildGlossary();
+renderFlashcard();
+</script>
+
+</body>
+</html>
